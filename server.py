@@ -188,6 +188,16 @@ EDGES_DATA = [
 
 
 class RequestHandler(BaseHTTPRequestHandler):
+    def _set_cors_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "*")
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self._set_cors_headers()
+        self.end_headers()
+
     def do_GET(self):
         routes = {
             "/revenues": REVENUES_DATA,
@@ -201,6 +211,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
         if self.path not in routes:
             self.send_response(404)
+            self._set_cors_headers()
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.end_headers()
             self.wfile.write(json.dumps({"error": "Not found"}).encode("utf-8"))
@@ -208,6 +219,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
         response = json.dumps(routes[self.path]).encode("utf-8")
         self.send_response(200)
+        self._set_cors_headers()
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(response)))
         self.end_headers()
