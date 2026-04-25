@@ -40,6 +40,27 @@ CARGO_DATA = {
     ],
 }
 
+RATES_DATA = {
+    "coal": {"name": "Уголь", "rate": 1.5},
+    "oil": {"name": "Нефть", "rate": 2.2},
+    "containers": {"name": "Контейнеры", "rate": 3.5},
+    "grain": {"name": "Зерно", "rate": 1.8},
+    "metals": {"name": "Металлы", "rate": 2.5},
+    "timber": {"name": "Лес", "rate": 1.4},
+    "chemicals": {"name": "Химия", "rate": 2.8},
+}
+
+STATIONS_DATA = [
+    "Москва",
+    "Санкт-Петербург",
+    "Новосибирск",
+    "Екатеринбург",
+    "Казань",
+    "Владивосток",
+    "Красноярск",
+    "Иркутск",
+]
+
 
 class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -47,6 +68,8 @@ class RequestHandler(BaseHTTPRequestHandler):
             "/revenues": REVENUES_DATA,
             "/prediction": PREDICTION_DATA,
             "/cargo": CARGO_DATA,
+            "/rates": RATES_DATA,
+            "/stations": STATIONS_DATA,
         }
 
         if self.path not in routes:
